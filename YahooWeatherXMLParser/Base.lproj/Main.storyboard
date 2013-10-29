@@ -30,11 +30,23 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="f6h-Mu-vZb">
+                                <rect key="frame" x="99" y="397" width="123" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="°C"/>
+                                    <segment title="°F"/>
+                                </segments>
+                                <connections>
+                                    <action selector="changedTempMetrics:" destination="vXZ-lx-hvc" eventType="valueChanged" id="kdd-14-JJ7"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" red="0.55089905893524227" green="0.81660975251980372" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="tempTypeSegment" destination="f6h-Mu-vZb" id="5CB-58-tdb"/>
                         <outlet property="temperatureLabel" destination="0Br-Tr-Eb1" id="Mor-tU-S98"/>
                     </connections>
                 </viewController>

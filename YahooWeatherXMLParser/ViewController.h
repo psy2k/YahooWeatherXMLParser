@@ -12,5 +12,6 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *temperatureLabel;
 @property (strong, nonatomic) NSXMLParser *parser;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *tempTypeSegment;
 
 @end
