@@ -14,13 +14,16 @@
 
 @implementation ViewController
 
-@synthesize temperatureLabel, parser, tempTypeSegment;
+@synthesize temperatureLabel, parser, tempTypeSegment, cityTextField, getWoeidBtn, woeid, cityName;
+
+BOOL parseChars;
+BOOL shouldParseWeather = YES;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.title = @"Temperature finder";
-    [self parseWeather];
+   
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -35,9 +38,10 @@
 }
 
 - (void) parseWeather {
+    if (woeid){
     dispatch_queue_t weatherqueue = dispatch_queue_create("yahooweather", NULL);
     dispatch_async(weatherqueue, ^(void) {
-        NSString *location = @"946738";
+//        NSString *location = @"946738";
         NSString *temperatureUnit;
         if (self.tempTypeSegment.selectedSegmentIndex == 0){
         temperatureUnit = @"c";
@@ -45,7 +49,7 @@
             temperatureUnit = @"f";
         }
         NSString *address = @"http://weather.yahooapis.com/forecastrss?w=";
-        NSString *request = [NSString stringWithFormat:@"%@%@&u=%@",address, location, temperatureUnit];
+        NSString *request = [NSString stringWithFormat:@"%@%@&u=%@",address, woeid, temperatureUnit];
         NSURL *URL = [NSURL URLWithString:request];
         
         self.parser = [[NSXMLParser alloc] initWithContentsOfURL:URL];
@@ -53,7 +57,10 @@
         [self.parser parse];
 
     });
-
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"City missing" message:@"Type a city in order to get temperature" delegate: self cancelButtonTitle:@"Cancel" otherButtonTitles: @"OK",nil, nil];
+        [alert show];
+    }
 }
 
 
@@ -67,7 +74,49 @@
             self.temperatureLabel.text = temp;
         });
     }
+    if ([elementName isEqual:@"woeid"])
+    {
+        parseChars = YES;
+        NSLog(@"Woeid: %@", woeid);
+
+    }
 }
 
+- (void) parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
+{
+    if (parseChars) {
+        woeid = string;
+        parseChars = NO;
+    }
+}
+
+- (IBAction)getWoeid:(id)sender {
+    [self.view endEditing:YES];
+    cityName = self.cityTextField.text;
+    [self parseWoeid];
+}
+
+- (void) parseWoeid {
+    dispatch_queue_t woeidqueue = dispatch_queue_create("woeidqueue", NULL);
+    dispatch_async(woeidqueue, ^(void) {
+        NSString *request = [NSString stringWithFormat:@"http://query.yahooapis.com/v1/public/yql?q=select * from geo.places where text=\"%@\"&format=xml", cityName];
+        NSString *encRequest = [request stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSURL *URL = [NSURL URLWithString:encRequest];
+        
+        self.parser = [[NSXMLParser alloc] initWithContentsOfURL:URL];
+        self.parser.delegate = self;
+        [self.parser parse];
+        
+    });
+    
+}
+
+- (void)parserDidEndDocument:(NSXMLParser *)parser
+{
+    if (shouldParseWeather) {
+      [self parseWeather];
+      shouldParseWeather = NO;
+    }
+}
 
 @end
