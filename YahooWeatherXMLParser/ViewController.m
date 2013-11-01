@@ -78,7 +78,6 @@ BOOL shouldParseWeather = YES;
     {
         parseChars = YES;
         NSLog(@"Woeid: %@", woeid);
-        [self.view setAlpha:0.3];
     }
 }
 
