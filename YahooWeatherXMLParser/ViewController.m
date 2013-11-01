@@ -78,7 +78,7 @@ BOOL shouldParseWeather = YES;
     {
         parseChars = YES;
         NSLog(@"Woeid: %@", woeid);
-
+        [self.view setAlpha:0.3];
     }
 }
 
@@ -92,6 +92,7 @@ BOOL shouldParseWeather = YES;
 
 - (IBAction)getWoeid:(id)sender {
     [self.view endEditing:YES];
+    shouldParseWeather = YES;
     cityName = self.cityTextField.text;
     [self parseWoeid];
 }
