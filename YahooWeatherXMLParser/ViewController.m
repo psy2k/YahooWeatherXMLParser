@@ -71,7 +71,11 @@ BOOL shouldParseWeather = YES;
         // UI updates should be dispatched to the main queue
         dispatch_async(dispatch_get_main_queue(), ^{
             NSString *temp = attributeDict[@"temp"];
-            self.temperatureLabel.text = temp;
+            if (self.tempTypeSegment.selectedSegmentIndex == 0){
+            self.temperatureLabel.text = [temp stringByAppendingString:@" °C"];
+            } else {
+               self.temperatureLabel.text = [temp stringByAppendingString:@" °F"];
+            }
         });
     }
     if ([elementName isEqual:@"woeid"])
