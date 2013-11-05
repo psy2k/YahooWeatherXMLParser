@@ -94,10 +94,15 @@ BOOL shouldParseWeather = YES;
 }
 
 - (IBAction)getWoeid:(id)sender {
-    [self.view endEditing:YES];
-    shouldParseWeather = YES;
-    cityName = self.cityTextField.text;
-    [self parseWoeid];
+     if (woeid){
+         [self.view endEditing:YES];
+         shouldParseWeather = YES;
+         cityName = self.cityTextField.text;
+         [self parseWoeid];
+     } else {
+         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"City missing" message:@"Type a city in order to get temperature" delegate: self cancelButtonTitle:@"Cancel" otherButtonTitles: @"OK",nil, nil];
+         [alert show];
+     }
 }
 
 - (void) parseWoeid {

@@ -460,6 +460,7 @@
 				1AD55C57181C11DE0073E9C9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1AD55C58181C11DE0073E9C9 /* Build configuration list for PBXNativeTarget "YahooWeatherXMLParserTests" */ = {
 			isa = XCConfigurationList;
@@ -468,6 +469,7 @@
 				1AD55C5A181C11DE0073E9C9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
