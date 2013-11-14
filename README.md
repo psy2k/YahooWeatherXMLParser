@@ -1,7 +1,9 @@
 YahooWeatherXMLParser
 =====================
 
-Simple iOS project that demonstrates Yahoo Weather XML parsing
+Simple iOS project (single view application with storyboard) that demonstrates Yahoo Weather XML parsing.
+
+Compatible with iOS 6 and iOS 7. 
 
 The MIT License (MIT)
 =====================
