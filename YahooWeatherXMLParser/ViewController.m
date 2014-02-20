@@ -23,8 +23,15 @@ BOOL shouldParseWeather = YES;
 {
     [super viewDidLoad];
     self.title = @"Temperature finder";
-   
+    UITapGestureRecognizer *tapToDismissKeyboard = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped)];
+    [tapToDismissKeyboard setNumberOfTapsRequired:1];
+    [self.view addGestureRecognizer:tapToDismissKeyboard];
+
 	// Do any additional setup after loading the view, typically from a nib.
+}
+
+- (void)tapped{
+    [self.view endEditing:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -37,6 +44,7 @@ BOOL shouldParseWeather = YES;
     [self parseWeather];
 }
 
+#pragma mark - Weather info parsing
 - (void) parseWeather {
     if (woeid){
     dispatch_queue_t weatherqueue = dispatch_queue_create("yahooweather", NULL);
