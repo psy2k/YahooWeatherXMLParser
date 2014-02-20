@@ -23,8 +23,15 @@ BOOL shouldParseWeather = YES;
 {
     [super viewDidLoad];
     self.title = @"Temperature finder";
-   
+    UITapGestureRecognizer *tapToDismissKeyboard = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped)];
+    [tapToDismissKeyboard setNumberOfTapsRequired:1];
+    [self.view addGestureRecognizer:tapToDismissKeyboard];
+
 	// Do any additional setup after loading the view, typically from a nib.
+}
+
+- (void)tapped{
+    [self.view endEditing:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -37,6 +44,7 @@ BOOL shouldParseWeather = YES;
     [self parseWeather];
 }
 
+#pragma mark - Weather info parsing
 - (void) parseWeather {
     if (woeid){
     dispatch_queue_t weatherqueue = dispatch_queue_create("yahooweather", NULL);
@@ -72,9 +80,30 @@ BOOL shouldParseWeather = YES;
         dispatch_async(dispatch_get_main_queue(), ^{
             NSString *temp = attributeDict[@"temp"];
             if (self.tempTypeSegment.selectedSegmentIndex == 0){
-            self.temperatureLabel.text = [temp stringByAppendingString:@" °C"];
+                double delayInSeconds = 0.0;
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    [UIView animateWithDuration:0.6f animations:^(void) {
+                        self.temperatureLabel.alpha = .5;
+                        self.temperatureLabel.transform = CGAffineTransformMakeScale(2.5, 2.5);
+                        self.temperatureLabel.text = [temp stringByAppendingString:@" °C"];
+                        self.temperatureLabel.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                        self.temperatureLabel.alpha = 1;
+                    }];
+                });
+                
             } else {
-               self.temperatureLabel.text = [temp stringByAppendingString:@" °F"];
+                double delayInSeconds = 0.0;
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    [UIView animateWithDuration:0.5f animations:^(void) {
+                        self.temperatureLabel.alpha = .5;
+                        self.temperatureLabel.transform = CGAffineTransformMakeScale(2.5, 2.5);
+                        self.temperatureLabel.text = [temp stringByAppendingString:@" °F"];
+                        self.temperatureLabel.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                        self.temperatureLabel.alpha = 1;
+                    }];
+                });
             }
         });
     }
@@ -94,7 +123,6 @@ BOOL shouldParseWeather = YES;
 }
 
 - (IBAction)getWoeid:(id)sender {
-    if (!woeid){
         if ([self.cityTextField.text length] > 0 || [self.cityTextField.text isEqualToString:@""] == FALSE){
          [self.view endEditing:YES];
          shouldParseWeather = YES;
@@ -104,10 +132,6 @@ BOOL shouldParseWeather = YES;
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"City missing" message:@"Type a city in order to get temperature" delegate: self cancelButtonTitle:@"Cancel" otherButtonTitles: @"OK",nil, nil];
             [alert show];
         }
-     } else {
-         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"City missing" message:@"Type a city in order to get temperature" delegate: self cancelButtonTitle:@"Cancel" otherButtonTitles: @"OK",nil, nil];
-         [alert show];
-     }
 }
 
 - (void) parseWoeid {
