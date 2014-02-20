@@ -123,7 +123,6 @@ BOOL shouldParseWeather = YES;
 }
 
 - (IBAction)getWoeid:(id)sender {
-    if (!woeid){
         if ([self.cityTextField.text length] > 0 || [self.cityTextField.text isEqualToString:@""] == FALSE){
          [self.view endEditing:YES];
          shouldParseWeather = YES;
@@ -133,10 +132,6 @@ BOOL shouldParseWeather = YES;
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"City missing" message:@"Type a city in order to get temperature" delegate: self cancelButtonTitle:@"Cancel" otherButtonTitles: @"OK",nil, nil];
             [alert show];
         }
-     } else {
-         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"City missing" message:@"Type a city in order to get temperature" delegate: self cancelButtonTitle:@"Cancel" otherButtonTitles: @"OK",nil, nil];
-         [alert show];
-     }
 }
 
 - (void) parseWoeid {
