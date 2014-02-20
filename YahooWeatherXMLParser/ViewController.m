@@ -72,9 +72,30 @@ BOOL shouldParseWeather = YES;
         dispatch_async(dispatch_get_main_queue(), ^{
             NSString *temp = attributeDict[@"temp"];
             if (self.tempTypeSegment.selectedSegmentIndex == 0){
-            self.temperatureLabel.text = [temp stringByAppendingString:@" °C"];
+                double delayInSeconds = 0.0;
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    [UIView animateWithDuration:0.6f animations:^(void) {
+                        self.temperatureLabel.alpha = .5;
+                        self.temperatureLabel.transform = CGAffineTransformMakeScale(2.5, 2.5);
+                        self.temperatureLabel.text = [temp stringByAppendingString:@" °C"];
+                        self.temperatureLabel.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                        self.temperatureLabel.alpha = 1;
+                    }];
+                });
+                
             } else {
-               self.temperatureLabel.text = [temp stringByAppendingString:@" °F"];
+                double delayInSeconds = 0.0;
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    [UIView animateWithDuration:0.5f animations:^(void) {
+                        self.temperatureLabel.alpha = .5;
+                        self.temperatureLabel.transform = CGAffineTransformMakeScale(2.5, 2.5);
+                        self.temperatureLabel.text = [temp stringByAppendingString:@" °F"];
+                        self.temperatureLabel.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                        self.temperatureLabel.alpha = 1;
+                    }];
+                });
             }
         });
     }
