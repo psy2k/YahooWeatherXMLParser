@@ -8,11 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController <NSXMLParserDelegate> {
-    
-    NSMutableString	*currentNodeContent;
-    
-}
+@interface ViewController : UIViewController <NSXMLParserDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *temperatureLabel;
 @property (strong, nonatomic) NSXMLParser *parser;
