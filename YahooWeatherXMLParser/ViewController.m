@@ -26,6 +26,11 @@ BOOL shouldParseWeather = YES;
     UITapGestureRecognizer *tapToDismissKeyboard = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped)];
     [tapToDismissKeyboard setNumberOfTapsRequired:1];
     [self.view addGestureRecognizer:tapToDismissKeyboard];
+    
+    //Add border to Button
+    getWoeidBtn.layer.borderColor = [UIColor whiteColor].CGColor;
+    getWoeidBtn.layer.borderWidth = 1.0;
+    getWoeidBtn.layer.cornerRadius = 5;
 
 	// Do any additional setup after loading the view, typically from a nib.
 }
