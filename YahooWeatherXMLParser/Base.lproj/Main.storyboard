@@ -8,7 +8,7 @@
         <!--View Controller - Temperature finder-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController title="Temperature finder" id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mainView" title="Temperature finder" id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ePX-Fy-1UF"/>
                         <viewControllerLayoutGuide type="bottom" id="nlA-Kc-VW0"/>

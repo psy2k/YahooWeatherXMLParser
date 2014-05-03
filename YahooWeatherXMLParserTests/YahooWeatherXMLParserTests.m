@@ -7,8 +7,11 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "ViewController.h"
 
 @interface YahooWeatherXMLParserTests : XCTestCase
+
+@property (nonatomic, strong) ViewController *vc;
 
 @end
 
@@ -17,6 +20,9 @@
 - (void)setUp
 {
     [super setUp];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    self.vc = [storyboard instantiateViewControllerWithIdentifier:@"mainView"];
+    [self.vc performSelectorOnMainThread:@selector(loadView) withObject:nil waitUntilDone:YES];
     // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
@@ -26,9 +32,9 @@
     [super tearDown];
 }
 
-- (void)testExample
+- (void)testInitNotNil
 {
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    XCTAssertNotNil(self.vc, @"Main ViewController object not instantiated");
 }
 
 @end
